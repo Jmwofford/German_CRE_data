@@ -1,9 +1,15 @@
-require 'json'
-require 'csv'
 require 'net/http'
 require 'uri'
+require 'json'
+require 'csv'
+# throws error about Authorization...Downloaded APIKEY for Google...unsure how to implement
 
-uri = URI.parse("https://maps.googleapis.com/maps/api/js/ViewportInfoService.GetViewportInfo?1m6^&1m2^&1d51.79363520135163^&2d12.024722050638047^&2m2^&1d52.83488208283146^&2d14.879753822437578^&2u10^&4sen-US^&5e0^&6sm^%^40434000000^&7b0^&8e0^&callback=_xdc_._g4jmpx^&token=56146")
+# APIKey: AIzaSyD8r6c57kriG13zQBS3M2k49zGd9P2QBP0
+
+# script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8r6c57kriG13zQBS3M2k49zGd9P2QBP0&callback=initMap"
+#   type="text/javascript"></script>
+
+uri = URI.parse("https://maps.googleapis.com/maps/api/js/ViewportInfoService.GetViewportInfo?1m6^&1m2^&1d53.05702057550015^&2d8.973358338414869^&2m2^&1d54.068562788194185^&2d11.81220261274973^&2u10^&4sen-US^&5e0^&6sm^%^40434000000^&7b0^&8e0^&callback=_xdc_._yy9s27^&token=106959")
 request = Net::HTTP::Get.new(uri)
 request["Referer"] = "https://www.realogis.de/suchen/gewerbehalle-kaufen.html"
 request["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"
@@ -16,14 +22,20 @@ req_options = {
 response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
   http.request(request)
 end
-p response
 
-# json = JSON.parse(response.body)
+json = JSON.parse(response.body)
 
-# => "The Google Maps JavaScript API must be downloaded directly from Google's servers. Learn more: https://developers.google.com/maps/documentation/javascript/tutorial#Loading_the_Maps_API"
+# 	items = json["data"].first["items"]
 
-# needsScriptTag and API key 
+# 	array = items.map do |item|
+# 		[item["lat"], item["lon"], "https://www.logivest.de/gewerbeimmobilien/" + item["id"].to_s]
+# end
 
-# <script async defer
-#       src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-#     </script>
+# p array.first
+
+# CSV.open('Land For Sale LGVST.csv','wb') do |csv|
+# 	csv << ["lat","lon", "url"]
+# 	array.each do |land_listing|
+# 		csv << land_listing
+# 	end
+# end
