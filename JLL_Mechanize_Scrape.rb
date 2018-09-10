@@ -8,6 +8,9 @@ url =('https://gewerbeimmobilien.jll.de/ergebnis/geopoint-10.342%2051.049_267.11
 page = agent.get url 
 
 locate_webpage = page.search('h3').children.to_json.split("-")
-		 pp locate_webpage 	
+
+filtered_res= pp locate_webpage = page.search('h3').children.to_json.split("-").sort
+		 pp filtered_res
+		 	
 
 

@@ -1,22 +1,32 @@
-# require 'net/http'
-# require 'uri'
-# require 'json'
-# require 'csv'
-# require 'mechanize'
 
-# agent = Mechanize.new
+require 'net/http'
+require 'uri'
+require 'json'
+require 'csv'
+require 'mechanize'
 
-# url = "https://www.realogis.de/suchen/gewerbehalle-kaufen.html"
+agent = Mechanize.new
 
-# page = agent.get url
+url = "https://www.realogis.de/suchen/gewerbehalle-kaufen.html"
 
-# # find_listing = page.search('nb-maklerTool-objectList-item-detailsItem')
+page = agent.get url
 
-# find_listing = page.search('.nb-maklerTool-objectList-item-detailsItem').children.to_json
 
-# json = JSON.parse(find_listing)
+find_listing = page.search('.nb-maklerTool-objectList-item-detailsItem-label')
+ 	
+ 	pp find_listing.children.text
 
-# pp json
+ 	find_listing.each do |listing|
+
+ 	end
+
+find_listing_value = page.search('.nb-maklerTool-objectList-item-detailsItem-value')
+		find_listing_value.each do |listing|
+ 			
+ 	end
+	pp find_listing_value.children.text.to_s.split("/") 
+
+
 # throws error about Authorization...Downloaded APIKEY for Google...unsure how to implement
 
 # APIKey: AIzaSyD8r6c57kriG13zQBS3M2k49zGd9P2QBP0
@@ -38,41 +48,4 @@
 #   http.request(request)
 # end
 
-# p response
 
-# 	items = json["data"].first["items"]
-
-# 	array = items.map do |item|
-# 		[item["lat"], item["lon"], "https://www.logivest.de/gewerbeimmobilien/" + item["id"].to_s]
-# end
-
-# p array.first
-
-# CSV.open('Land For Sale LGVST.csv','wb') do |csv|
-# 	csv << ["lat","lon", "url"]
-# 	array.each do |land_listing|
-# 		csv << land_listing
-# 	end
-# end
-
-
-require 'net/http'
-require 'uri'
-require 'json'
-require 'csv'
-require 'mechanize'
-
-agent = Mechanize.new
-
-url = "https://www.realogis.de/suchen/gewerbehalle-kaufen.html"
-
-page = agent.get url
-
-
-find_listing = page.search('.nb-maklerTool-objectList-item-detailsItem-label')
- 	
- 	pp find_listing.children.text
-
-find_listing_value = page.search('.nb-maklerTool-objectList-item-detailsItem-value')
-
-	pp find_listing_value.children.text.to_s.split("/")
